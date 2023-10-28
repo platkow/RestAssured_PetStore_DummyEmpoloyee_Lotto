@@ -7,75 +7,51 @@ import io.restassured.response.ValidatableResponse;
 import java.util.List;
 
 public class UserClient extends BaseRequests {
-    private final String url = "https://petstore.swagger.io/v2/";
-    private final String endpointUser = "user/";
-    private final String endpointCreateWithArray = "createWithArray";
-    private final String endpointCreateWithList = "createWithList";
-    private final String endpointLogin = "login";
-    private final String endpointLogout = "logout";
-    private final String paramUserName= "{username}";
-    private final String paramPassword= "{password}";
-    private final String paramStatus = "findByStatus?status=";
+    private final String URL = "https://petstore.swagger.io/v2/";
+    private final String ENDPOINT_USER = "user/";
+    private final String ENDPOINT_CREATE_WITH_ARRAY = "createWithArray";
+    private final String ENDPOINT_CREATE_WITH_LIST = "createWithList";
+    private final String ENDPOINT_LOGIN = "login";
+    private final String ENDPOINT_LOGOUT = "logout";
+    private final String PARAMETER_NAME = "{username}";
+    private final String PARAMETER_PASSWORD = "{password}";
+    
+    private final String CREATE_ARRAY_OF_USERS_URL = URL + ENDPOINT_USER + ENDPOINT_CREATE_WITH_ARRAY;
+    private final String CREATE_LIST_OF_USERS_URL = URL + ENDPOINT_USER + ENDPOINT_CREATE_WITH_LIST;
+    private final String SIMPLE_USER_NAME_URL= URL + ENDPOINT_USER;
+    private final String LOGIN_USER_URL = URL + ENDPOINT_USER + ENDPOINT_LOGIN + PARAMETER_NAME + PARAMETER_PASSWORD;
+    private final String LOGOUT_USER_URL = URL + ENDPOINT_USER + ENDPOINT_LOGOUT;
+    private final String CREATE_USER_URL = URL + ENDPOINT_USER;
 
-    private String simpleUrl = url;
-    private String createArrayOfUsersUrl = url + endpointUser + endpointCreateWithArray;
-    private String createListOfUsersUrl = url + endpointUser + endpointCreateWithList;
-    private String simpleUserNameUrl = url + endpointUser;
-    private String getPetByStatus = url + paramStatus;
-    private String loginUserUrl = url + endpointUser + endpointLogin + paramUserName + paramPassword;
-    private String logoutUserUrl = url + endpointUser + endpointLogout;
-
-
-    //3
-    private String getUserByName = "https://petstore.swagger.io/v2/user/{username}"; //get
-    //4
-    private String updateUser = "https://petstore.swagger.io/v2/user/{username}"; //put
-    //5
-    private String deleteUser = "https://petstore.swagger.io/v2/user/{username}"; //del
-    //6
-    private String loginUser = "https://petstore.swagger.io/v2/user/login"; //get
-    //7
-    private String logoutUser = "https://petstore.swagger.io/v2/user/logout"; //get
-    //8
-    private String createUser = "https://petstore.swagger.io/v2/user"; //post
-
-    //1
     public ValidatableResponse createArrayOfUsers(User[] users) {
-        return create(createArrayOfUsersUrl, users);
+        return create(CREATE_ARRAY_OF_USERS_URL, users);
     }
 
-    //2
     public ValidatableResponse createListOfUsers(List<User> users) {
-        return create(createListOfUsersUrl, users);
+        return create(CREATE_LIST_OF_USERS_URL, users);
     }
 
-    //3
     public ValidatableResponse getUserByName(String username) {
-        return get(simpleUserNameUrl + username);
+        return get(SIMPLE_USER_NAME_URL+ username);
     }
 
-    //4
     public ValidatableResponse updateUserByName(String username, User user) {
-        return update(simpleUserNameUrl + username, user);
+        return update(SIMPLE_USER_NAME_URL+ username, user);
     }
 
-    //5
     public ValidatableResponse deleteUserByName(String username) {
-        return delete(simpleUserNameUrl + username);
+        return delete(SIMPLE_USER_NAME_URL+ username);
     }
 
-    //6
     public ValidatableResponse loginUser(String userNameValue, String passwordValue) {
-        return getAuthentication("username", userNameValue, "password", passwordValue, loginUserUrl);
+        return getAuthentication("username", userNameValue, "password", passwordValue, LOGIN_USER_URL);
     }
 
-    //7
     public ValidatableResponse logoutUser() {
-        return get(logoutUserUrl);
+        return get(LOGOUT_USER_URL);
     }
 
-    //8
     public ValidatableResponse createUser(User user) {
-        return create(createUser, user);
+        return create(CREATE_USER_URL, user);
     }
 }
