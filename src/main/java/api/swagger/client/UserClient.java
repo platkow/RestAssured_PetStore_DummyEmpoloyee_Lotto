@@ -23,6 +23,7 @@ public class UserClient extends BaseRequests {
     private String simpleUserNameUrl = url + endpointUser;
     private String getPetByStatus = url + paramStatus;
     private String loginUserUrl = url + endpointUser + endpointLogin + paramUserName + paramPassword;
+    private String logoutUserUrl = url + endpointUser + endpointLogout;
 
 
     //3
@@ -64,17 +65,17 @@ public class UserClient extends BaseRequests {
     }
 
     //6
-    public ValidatableResponse loginUser(String usernameName, String userNameValue, String passwordName, String passwordValue) {
-        return getAuthentication(usernameName, userNameValue, passwordName, passwordValue, loginUserUrl);
+    public ValidatableResponse loginUser(String userNameValue, String passwordValue) {
+        return getAuthentication("username", userNameValue, "password", passwordValue, loginUserUrl);
     }
 
     //7
-//    public ValidatableResponse logoutUser(String userName, String password) {
-//        return getAuth(userName, password, logoutUser);
-//    }
+    public ValidatableResponse logoutUser() {
+        return get(logoutUserUrl);
+    }
 
     //8
     public ValidatableResponse createUser(User user) {
-        return create(createUser, user.toString());
+        return create(createUser, user);
     }
 }

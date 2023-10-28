@@ -1,3 +1,5 @@
+package dummyemployee;
+
 import api.dummyemployee.client.DummyEmployee;
 import api.dummyemployee.models.AllEmployeesResult;
 import api.dummyemployee.models.Employee;

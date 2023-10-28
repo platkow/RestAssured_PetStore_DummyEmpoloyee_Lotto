@@ -1,3 +1,5 @@
+package swagger;
+
 import api.swagger.client.PetClient;
 import api.swagger.model.APIResponse;
 import api.swagger.model.pet.*;
@@ -13,6 +15,9 @@ import java.util.List;
 public class PetTest {
     private String status = "available";
     private PetClient petClient;
+    Category category = new Category(1, "small");
+    Tag firstTag = new Tag(1, "Small dog");
+    Tag secondTag = new Tag(2, "Medium dog");
 
     @BeforeEach
     public void cratePetClient() {
@@ -35,18 +40,14 @@ public class PetTest {
 
     @Test
     public void shouldAddNewPetToTheStore() {
-        Category category = new Category(1, "small");
-
-        Tag firstTag = new Tag(1, "Small dog");
-        Tag secondTag = new Tag(2, "Medium dog");
-
-
-        Pet pet = new Pet(1,
-                category,
-                "Rex",
-                Arrays.asList("firstURL", "secondURL"),
-                Arrays.asList(firstTag, secondTag),
-                PetStatus.AVAILABLE.getStatus());
+        Pet pet = new Pet.Builder()
+                .id(1)
+                .category(category)
+                .name("rex")
+                .photoUrls(Arrays.asList("firstURL", "secondURL"))
+                .tags(Arrays.asList(firstTag, secondTag))
+                .status(PetStatus.AVAILABLE.getStatus())
+                .build();
 
         ValidatableResponse response = petClient.addNewPet(pet);
         Pet petStatus = response.extract().response().body().as(Pet.class);
@@ -55,17 +56,14 @@ public class PetTest {
 
     @Test
     public void shouldUpdateExistingPet() {
-        Category firstCategory = new Category(1, "small");
-
-        Tag firstTag = new Tag(1, "Small dog");
-        Tag secondTag = new Tag(2, "Medium dog");
-
-        Pet pet = new Pet(0,
-                firstCategory,
-                "Rex",
-                Arrays.asList("firstURL", "secondURL"),
-                Arrays.asList(firstTag, secondTag),
-                "available");
+        Pet pet = new Pet.Builder()
+                .id(1)
+                .category(category)
+                .name("snoopy")
+                .photoUrls(Arrays.asList("firstURL", "secondURL"))
+                .tags(Arrays.asList(firstTag, secondTag))
+                .status(PetStatus.AVAILABLE.getStatus())
+                .build();
 
         ValidatableResponse response = petClient.updatePet(pet);
         Pet petResponse = response.extract().body().as(Pet.class);

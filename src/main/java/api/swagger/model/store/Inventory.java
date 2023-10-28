@@ -15,6 +15,5 @@ public class Inventory {
     private int fdbdf;
     private int nwxcwGQRgA;
     private int YhDHkCksOI;
-
     private int Sold;
 }

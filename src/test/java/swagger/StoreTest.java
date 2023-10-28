@@ -1,3 +1,5 @@
+package swagger;
+
 import api.swagger.client.StoreClient;
 import api.swagger.model.APIResponse;
 import api.swagger.model.store.Inventory;
@@ -17,13 +19,14 @@ public class StoreTest {
 
     @Test
     public void shouldOrderPet() {
-        Order order = new Order(
-                0,
-                0,
-                0,
-                "2023-06-26T12:14:19.504Z",
-                "placed",
-                true);
+        Order order = new Order.Builder()
+                .id(0)
+                .petId(0)
+                .quantity(0)
+                .shipDate("2023-06-26T12:14:19.504Z")
+                .status("placed")
+                .complete(true)
+                .build();
 
         ValidatableResponse response = storeClient.orderPet(order);
         Order orderResponse = response.extract().body().as(Order.class);
